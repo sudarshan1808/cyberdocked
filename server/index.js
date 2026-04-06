@@ -20,9 +20,23 @@ const { contentData } = require("./data.js");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Configure CORS with proper origin handling
+const allowedOrigins = [
+  process.env.CLIENT_ORIGIN,
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://cyberflix-2-client.onrender.com",
+];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
