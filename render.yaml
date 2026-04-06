@@ -1,0 +1,9 @@
+routes:
+  - path: /
+    dest: /index.html
+  - path: /index.html
+    dest: /index.html
+  - path: /api/*
+    dest: /api/
+  - path: /*
+    dest: /index.html
