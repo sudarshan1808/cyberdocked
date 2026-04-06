@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build output
+client/dist/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and OS metadata
+.vscode/
+.vs/
+.DS_Store
+Thumbs.db
+
+# Other project-specific ignores
+.qodo/
