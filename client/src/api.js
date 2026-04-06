@@ -1,5 +1,7 @@
 const TOKEN_KEY = "cyberflix_token";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export function getToken() {
   return sessionStorage.getItem(TOKEN_KEY);
 }
@@ -10,13 +12,14 @@ export function setToken(token) {
 }
 
 async function request(path, options = {}) {
+  const fullPath = path.startsWith("http") ? path : API_URL + path;
   const headers = { ...options.headers };
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
   if (options.body && typeof options.body === "object" && !(options.body instanceof FormData)) {
     headers["Content-Type"] = "application/json";
   }
-  const res = await fetch(path, {
+  const res = await fetch(fullPath, {
     ...options,
     headers,
     body:
