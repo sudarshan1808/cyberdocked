@@ -1,8 +1,6 @@
-const TOKEN_KEY = "cyberflix_token";
-
 const API_BASE_URL = "https://mern-backend-rtvi.onrender.com";
 
-console.log("FINAL API URL:", API_BASE_URL);
+const TOKEN_KEY = "cyberflix_token";
 
 export function getToken() {
   return sessionStorage.getItem(TOKEN_KEY);
@@ -66,3 +64,11 @@ export const api = {
     request(`/api/content/${contentId}/rate`, { method: "POST", body: { ratings } }),
   getRatings: (contentId) => request(`/api/content/${contentId}/ratings`),
 };
+
+export const fetchContent = async () => {
+const res = await fetch(`${API_BASE_URL}/api/content`);
+if (!res.ok) throw new Error("API error");
+return res.json();
+};
+
+console.log("FINAL API URL:", API_BASE_URL);

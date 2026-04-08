@@ -448,26 +448,26 @@ async function loginUser(email, password) {
 
 ```bash
 # Register
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST https://mern-backend-rtvi.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"username":"testuser","email":"test@example.com","password":"password123"}'
 
 # Verify Email (replace TOKEN and CODE)
-curl -X POST http://localhost:5000/api/auth/verify-email \
+curl -X POST https://mern-backend-rtvi.onrender.com/api/auth/verify-email \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer TOKEN_HERE" \
   -d '{"verificationCode":"123456"}'
 
 # Resend
-curl -X POST http://localhost:5000/api/auth/resend-verification-email \
+curl -X POST https://mern-backend-rtvi.onrender.com/api/auth/resend-verification-email \
   -H "Authorization: Bearer TOKEN_HERE"
 
 # Login
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST https://mern-backend-rtvi.onrender.com/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"password123"}'
 
 # Get Current User
-curl http://localhost:5000/api/auth/me \
+curl https://mern-backend-rtvi.onrender.com/api/auth/me \
   -H "Authorization: Bearer TOKEN_HERE"
 ```

@@ -240,7 +240,7 @@ All endpoints include proper error responses:
 ### Testing Tools:
 ```bash
 # Test register
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST https://mern-backend-rtvi.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"username":"test","email":"test@ex.com","password":"pass123"}'
 

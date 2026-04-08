@@ -41,7 +41,7 @@ PORT=5000
 
 **client/.env:**
 ```
-VITE_API_URL=http://localhost:5000
+VITE_API_URL=https://mern-backend-rtvi.onrender.com
 ```
 
 ### Running with Docker Compose
@@ -52,7 +52,7 @@ docker-compose up --build
 
 This will start:
 - Frontend on http://localhost:3000
-- Backend on http://localhost:5000
+- Backend on https://mern-backend-rtvi.onrender.com
 
 ### Running Locally (without Docker)
 

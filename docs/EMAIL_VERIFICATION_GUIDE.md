@@ -339,7 +339,7 @@ const handleLogin = async (credentials) => {
 ### With cURL:
 ```bash
 # Register
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST https://mern-backend-rtvi.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "username": "testuser",
@@ -348,13 +348,13 @@ curl -X POST http://localhost:5000/api/auth/register \
   }'
 
 # Verify Email (use token from register response)
-curl -X POST http://localhost:5000/api/auth/verify-email \
+curl -X POST https://mern-backend-rtvi.onrender.com/api/auth/verify-email \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <token>" \
   -d '{"verificationCode": "123456"}'
 
 # Login
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST https://mern-backend-rtvi.onrender.com/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "test@example.com",
