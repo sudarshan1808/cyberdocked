@@ -1,19 +1,8 @@
 const TOKEN_KEY = "cyberflix_token";
 
-function getApiBaseUrl() {
-  const envUrl = import.meta.env.VITE_API_URL;
-  if (typeof envUrl === "string" && envUrl.trim()) {
-    const normalized = envUrl.trim();
-    if (!/localhost|127\.0\.0\.1/.test(normalized)) {
-      return normalized;
-    }
-  }
-  return "https://mern-backend-rtvi.onrender.com";
-}
+const API_BASE_URL = "https://mern-backend-rtvi.onrender.com";
 
-const API_BASE_URL = getApiBaseUrl();
-
-console.log("API BASE URL:", API_BASE_URL);
+console.log("FINAL API URL:", API_BASE_URL);
 
 export function getToken() {
   return sessionStorage.getItem(TOKEN_KEY);
