@@ -1,6 +1,10 @@
 const TOKEN_KEY = "cyberflix_token";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://mern-backend-rtvi.onrender.com";
+const DEFAULT_API_URL = "https://mern-backend-rtvi.onrender.com";
+const API_BASE_URL =
+  typeof window !== "undefined" && window.location.hostname.includes("onrender.com")
+    ? DEFAULT_API_URL
+    : import.meta.env.VITE_API_URL || DEFAULT_API_URL;
 
 console.log("API URL:", API_BASE_URL);
 
