@@ -7,7 +7,8 @@
     "build": "npm run build --prefix client",
     "start": "npm run start --prefix server",
     "render-build": "npm install --prefix server",
-    "render-start": "npm start --prefix server"
+    "render-start": "npm start --prefix server",
+    "trigger-ci": "git commit --allow-empty -m \"trigger ci\" && git push origin main"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
