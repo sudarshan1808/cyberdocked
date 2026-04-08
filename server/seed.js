@@ -1,12 +1,9 @@
-import { createRequire } from "module";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Content from "./models/Content.js";
+import { contentData } from "./data.js";
 
 dotenv.config();
-
-const require = createRequire(import.meta.url);
-const { contentData } = require("./data.js");
 
 async function cleanDatabase() {
   const db = mongoose.connection.db;

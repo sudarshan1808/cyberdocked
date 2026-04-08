@@ -1,0 +1,11 @@
+services:
+  frontend:
+    build: ./client
+    ports:
+      - "3000:80"
+  backend:
+    build: ./server
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env

@@ -1,12 +1,10 @@
 import { Router } from "express";
-import { createRequire } from "module";
 import Content from "../models/Content.js";
 import Rating from "../models/Rating.js";
 import { authRequired } from "../middleware/auth.js";
+import { contentData } from "../data.js";
 
 const router = Router();
-const require = createRequire(import.meta.url);
-const { contentData } = require("../data.js");
 
 router.get("/", async (req, res) => {
   if (!req.app.locals.mongoEnabled) {

@@ -1,55 +1,117 @@
-# CyberFlix MERN
+# Cyberflix MERN Stack Project
 
-A full-stack streaming platform powered by React, Express, and MongoDB.
+A full-stack MERN (MongoDB, Express, React, Node.js) application for streaming platform content management.
 
-## 📁 Project Structure
+## Tech Stack
 
-- `client/` — React + Vite frontend
-- `server/` — Express + MongoDB backend
-- `docs/` — Project documentation
+- **Frontend**: React + Vite
+- **Backend**: Node.js + Express
+- **Database**: MongoDB
+- **Deployment**: Docker + Docker Compose
+- **CI/CD**: GitHub Actions
 
-## 🚀 Quick Start
+## Project Structure
 
-1. **Install dependencies:**
+```
+/project-root
+/client          # React + Vite frontend
+/server          # Node + Express backend
+docker-compose.yml
+.github/workflows/deploy.yml
+```
+
+## Local Development Setup
+
+### Prerequisites
+
+- Node.js 18+
+- MongoDB (local or Atlas)
+- Docker & Docker Compose
+
+### Environment Variables
+
+Create `.env` files in both `client/` and `server/` directories.
+
+**server/.env:**
+```
+MONGO_URI=mongodb://127.0.0.1:27017/cyberflix
+JWT_SECRET=your-jwt-secret
+PORT=5000
+```
+
+**client/.env:**
+```
+VITE_API_URL=http://localhost:5000
+```
+
+### Running with Docker Compose
+
+```bash
+docker-compose up --build
+```
+
+This will start:
+- Frontend on http://localhost:3000
+- Backend on http://localhost:5000
+
+### Running Locally (without Docker)
+
+1. Install dependencies:
    ```bash
-   npm install
    npm run install:all
    ```
 
-2. **Start development:**
+2. Start development servers:
    ```bash
    npm run dev
    ```
 
-3. **Build for production:**
-   ```bash
-   npm run build
-   ```
+## Production Deployment
 
-## 📚 Documentation
+### Docker Images
 
-- **[Vercel Deployment Guide](docs/VERCEL_DEPLOYMENT.md)** — Deploy to production
-- **[Quick Start](docs/QUICK_START.md)** — 30-second overview
-- **[Setup Summary](docs/SETUP_SUMMARY.md)** — Complete feature list
-- **[Email Verification Guide](docs/EMAIL_VERIFICATION_GUIDE.md)** — Technical details
-- **[API Reference](docs/API_RESPONSE_REFERENCE.md)** — All endpoints
+The project includes Dockerfiles for both frontend and backend:
 
-## 🛠️ Tech Stack
+- Backend: `Dockerfile` in `server/`
+- Frontend: Multi-stage `Dockerfile` in `client/` (build + nginx)
 
-- **Frontend**: React 18 + Vite + React Router
-- **Backend**: Express + Node.js
-- **Database**: MongoDB
-- **Auth**: JWT + Email Verification
-- **Email**: Nodemailer + Gmail SMTP
+### CI/CD Pipeline
 
-## 📋 Features
+GitHub Actions workflow (`.github/workflows/deploy.yml`) automatically:
 
-✅ User authentication & email verification  
-✅ Content browsing & filtering  
-✅ Watchlist management  
-✅ User ratings & recommendations  
-✅ Profile management  
+- Builds Docker images on push to `main`
+- Pushes images to Docker Hub as `<username>/mern-backend` and `<username>/mern-frontend`
 
-## 🌐 Deployment
+### Required GitHub Secrets
 
-Deploy on Vercel with MongoDB Atlas backend. See [Vercel Deployment Guide](docs/VERCEL_DEPLOYMENT.md) for step-by-step instructions.
+Set these in your repository settings:
+
+- `DOCKER_USERNAME`: Your Docker Hub username
+- `DOCKER_PASSWORD`: Your Docker Hub password/token
+
+## API Endpoints
+
+- `GET /api/health` - Health check
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/content` - Get all content
+- `GET /api/content/:id` - Get content by ID
+- `POST /api/watchlist` - Add to watchlist
+- `GET /api/watchlist` - Get user watchlist
+
+## Features
+
+- User authentication and authorization
+- Content browsing and details
+- Personal watchlist
+- Email verification
+- Responsive design
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test with `docker-compose up --build`
+5. Push to your fork
+6. Create a pull request

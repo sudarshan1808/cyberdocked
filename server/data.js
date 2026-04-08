@@ -1,4 +1,4 @@
-const contentData = [
+export const contentData = [
   {
     id: 1,
     title: "Naruto Shippuden",

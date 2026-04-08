@@ -1,21 +1,19 @@
 import express from "express";
 import cors from "cors";
-import fs from "fs";
+import fs from "fs";                          
 import path from "path";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { createRequire } from "module";
 import Content from "./models/Content.js";
 import authRoutes from "./routes/auth.js";
 import contentRoutes from "./routes/content.js";
 import watchlistRoutes from "./routes/watchlist.js";
+import { contentData } from "./data.js";
 
 dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const require = createRequire(import.meta.url);
-const { contentData } = require("./data.js");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,13 +21,25 @@ const PORT = process.env.PORT || 5000;
 // Allow all origins in production (Render static site needs this)
 app.use(
   cors({
-    origin: "*",
+    origin: ["http://localhost:3000", "http://localhost:5173"],
     credentials: false,
   })
 );
 app.use(express.json({ limit: "1mb" }));
 
+// Logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
+
+app.get("/", (_req, res) => res.json({ message: "API is running" }));
+
+app.get("/health", (_req, res) => res.json({ status: "OK" }));
+
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
+
+app.get("/api/test", (_req, res) => res.json({ test: "This is a test endpoint", data: [1, 2, 3] }));
 
 // Test email endpoint for debugging (remove in production)
 app.post("/api/test-email", async (req, res) => {
@@ -67,6 +77,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/content", contentRoutes);
 app.use("/api/watchlist", watchlistRoutes);
 
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error("Error:", err);
+  res.status(500).json({ error: "Internal server error" });
+});
+
 const clientDist = path.join(__dirname, "../client/dist");
 if (fs.existsSync(clientDist)) {
   app.use(express.static(clientDist));
@@ -87,7 +103,7 @@ async function ensureContentSeeded() {
 }
 
 async function start() {
-  const uri = process.env.MONGODB_URI;
+  const uri = process.env.MONGO_URI;
   const mongoEnabled = Boolean(uri);
   app.locals.mongoEnabled = mongoEnabled;
 
@@ -97,13 +113,20 @@ async function start() {
   }
 
   if (mongoEnabled) {
-    await mongoose.connect(uri);
-    await ensureContentSeeded();
+    try {
+      await mongoose.connect(uri);
+      console.log("✅ MongoDB connected successfully");
+      await ensureContentSeeded();
+    } catch (error) {
+      console.error("❌ MongoDB connection failed:", error.message);
+      console.warn("Falling back to data.js for content");
+    }
   } else {
-    console.warn("MONGODB_URI is not set. Content will be served from data.js (auth/watchlist disabled).");
+    console.warn("MONGO_URI is not set. Content will be served from data.js (auth/watchlist disabled).");
   }
   app.listen(PORT, () => {
-    console.log(`API listening on http://localhost:${PORT}`);
+    console.log(`🚀 Server started successfully on http://localhost:${PORT}`);
+    console.log(`📡 API endpoints available at http://localhost:${PORT}/api/*`);
   });
 }
 

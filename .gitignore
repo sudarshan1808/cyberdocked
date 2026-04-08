@@ -5,6 +5,8 @@ server/node_modules/
 
 # Build output
 client/dist/
+dist
+build
 
 # Environment files
 .env
@@ -19,3 +21,7 @@ Thumbs.db
 
 # Other project-specific ignores
 .qodo/
+
+# Docker
+Dockerfile.local
+docker-compose.override.yml
