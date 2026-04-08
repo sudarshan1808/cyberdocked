@@ -1,6 +1,8 @@
 const TOKEN_KEY = "cyberflix_token";
 
-const API_URL = import.meta.env.VITE_API_URL || "https://mern-backend-rtvi.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://mern-backend-rtvi.onrender.com";
+
+console.log("API URL:", API_BASE_URL);
 
 export function getToken() {
   return sessionStorage.getItem(TOKEN_KEY);
@@ -12,7 +14,7 @@ export function setToken(token) {
 }
 
 async function request(path, options = {}) {
-  const fullPath = path.startsWith("http") ? path : API_URL + path;
+  const fullPath = path.startsWith("http") ? path : API_BASE_URL + path;
   const headers = { ...options.headers };
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
