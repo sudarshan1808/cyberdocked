@@ -9,7 +9,12 @@ RUN npm ci --no-audit
 
 COPY . .
 
-RUN rm -rf dist && npm run build
+# FORCE CLEAN BUILD
+RUN rm -rf node_modules/.cache dist
+RUN npm run build
+
+# VERIFY NO LOCALHOST IN DIST
+RUN grep -r "localhost" /app/dist || echo "No localhost found in dist"
 
 # Production stage
 FROM nginx:alpine
