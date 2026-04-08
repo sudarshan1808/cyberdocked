@@ -5,11 +5,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --no-cache
+RUN npm ci --no-audit
 
 COPY . .
 
-RUN npm run build
+RUN rm -rf dist && npm run build
 
 # Production stage
 FROM nginx:alpine
